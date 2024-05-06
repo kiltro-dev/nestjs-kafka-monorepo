@@ -23,4 +23,12 @@ export class OrdersService {
     await lastValueFrom(this.clientKafka.emit('orders', order));
     return order;
   }
+
+  complete(id: number, status: OrderStatus) {
+    console.log(id, status);
+    return this.prismaService.order.update({
+      where: { id },
+      data: { status },
+    });
+  }
 }
